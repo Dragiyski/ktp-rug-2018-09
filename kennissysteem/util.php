@@ -405,7 +405,7 @@ class Template
 	{
 		ob_start();
 		extract($this->__DATA__);
-		include $this->__TEMPLATE__;
+		include $_SERVER['DOCUMENT_ROOT'] . '/' .$this->__TEMPLATE__;
 		
 		if ($this->__PARENT__) {
 			ob_end_clean();

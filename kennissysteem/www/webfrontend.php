@@ -1,9 +1,9 @@
 <?php
 
-include '../util.php';
-include '../solver.php';
-include '../reader.php';
-include '../formatter.php';
+include __DIR__ . '/../util.php';
+include __DIR__ . '/../solver.php';
+include __DIR__ . '/../reader.php';
+include __DIR__ . '/../formatter.php';
 
 function _encode($data)
 {
@@ -144,14 +144,14 @@ class WebFrontend
 	}
 }
 
-if (!isset($_GET['kb']) || !preg_match('/^[a-zA-Z0-9_\-\.]+\.xml$/i', $_GET['kb'])) {
-	header('Location: index.php');
-	exit;
-}
+// if (!isset($_GET['kb']) || !preg_match('/^[a-zA-Z0-9_\-\.]+\.xml$/i', $_GET['kb'])) {
+// 	header('Location: index.php');
+// 	exit;
+// }
 
-header('Content-Type: text/html; charset=UTF-8');
-$frontend = new WebFrontend(first_found_path(array(
-	'./' . $_GET['kb'],
-	'../knowledgebases/' . $_GET['kb']
-)));
-$frontend->main();
+// header('Content-Type: text/html; charset=UTF-8');
+// $frontend = new WebFrontend(first_found_path(array(
+// 	'./' . $_GET['kb'],
+// 	'../knowledgebases/' . $_GET['kb']
+// )));
+// $frontend->main();
