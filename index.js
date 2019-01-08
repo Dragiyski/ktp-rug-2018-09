@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-
+    const PORT = process.env.PORT || 3000;
     const express = require('express');
     const path = require('path');
 
@@ -8,7 +8,7 @@
 
     app.get(express.static(path.resolve(__dirname, 'public')));
 
-    app.listen(80, () => {
+    app.listen(PORT, () => {
         console.log('Server started');
     });
 })();
