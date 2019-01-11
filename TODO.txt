@@ -1,0 +1,20 @@
+Price
+Package Size
+Brand loyalty
+Heavy vs. light user: for quantity and for frequency
+Preferred quantity to buy (this is about package size, not about frequency)
+Sugar vs. Sugar Free
+Artificial Flavours?
+Maximum kcal per day from soft drinks?: High vs. Low
+Coffein/Energy drink vs. non-energy drink.
+Carbonated vs. flat
+
+Product attributes:
+- price
+- company
+- pakcage size
+- sugar per 100g
+- kcal per 100g
+- has artificial flavours
+- has caffein
+- is carbonated

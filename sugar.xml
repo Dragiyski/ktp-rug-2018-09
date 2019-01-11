@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knowledge>
+    <title>Reduce Sugar Intake</title>
+    <description></description>
+    <goal name="price">
+        <description>Price</description>
+        <answer value="cheap">Cheap</answer>
+        <answer value="average">Average/Normal</answer>
+        <answer value="expensive">Expensive</answer>
+    </goal>
+    <goal name="company">
+        <description>Company</description>
+        <answer value="coca-cola">Coca Cola</answer>
+        <answer value="pepsi-cola">Pepsi Cola</answer>
+    </goal>
+    <goal name="artificial_sweeterners">
+        <description>Artificial Sweeteners</description>
+        <answer value="yes">Yes</answer>
+        <answer value="no">No</answer>
+    </goal>
+    <goal name="sugar_free">
+        <description>Sugar free</description>
+        <answer value="yes">Yes</answer>
+        <answer value="no">No</answer>
+    </goal>
+    <rule>
+        <description>Brand Loyalty To company</description>
+        <if>
+            <and>
+                <fact name="has-brand-loyalty">yes</fact>
+                <fact name="loyat_to">coca-cola</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="company">coca-cola</fact>
+        </then>
+    </rule>
+    <rule>
+        <description>Brand Loyalty To company</description>
+        <if>
+            <and>
+                <fact name="has-brand-loyalty">yes</fact>
+                <fact name="loyat_to">pepsi-cola</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="company">pepsi-cola</fact>
+        </then>
+    </rule>
+    <rule>
+        <description>Artificial sweeteners when sugar free</description>
+        <if>
+            <and>
+                <fact name="artificial_sweeteners_okay">no</fact>
+                <fact name="sugar_free">yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="artificial_sweeterners">no</fact>
+        </then>
+    </rule>
+
+    <question>
+        <description>How much money are you willing to spend per day on soft drinks?</description>
+        <option>
+            <description>Less than EUR 2.00</description>
+            <then>
+                <fact name="price">cheap</fact>
+            </then>
+        </option>
+        <option>
+            <description>Between EUR 2.00 and EUR 5.00</description>
+            <then>
+                <fact name="price">average</fact>
+            </then>
+        </option>
+        <option>
+            <description>More than EUR 5.00</description>
+            <then>
+                <fact name="price">expensive</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Has Brand Loyalty?</description>
+        <option>
+            <description>Yes</description>
+            <then>
+                <fact name="has-brand-loyalty">yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>No</description>
+            <then>
+                <fact name="has-brand-loyalty">no</fact>
+            </then>
+        </option>
+        <option>
+            <description>I don't know</description>
+            <then>
+                <fact name="has-brand-loyalty">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Brand Loyalty To?</description>
+        <option>
+            <description>Coca cola</description>
+            <then>
+                <fact name="loyat_to">coca-cola</fact>
+            </then>
+        </option>
+        <option>
+            <description>Pepsi cola</description>
+            <then>
+                <fact name="loyat_to">pepsi-cola</fact>
+            </then>
+        </option>
+        <option>
+            <description>Other</description>
+            <then>
+                <fact name="loyat_to">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Artificial sweeteners?</description>
+        <option>
+            <description>Can contain</description>
+            <then>
+                <fact name="artificial_sweeteners_okay">yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>Should not contain</description>
+            <then>
+                <fact name="artificial_sweeteners_okay">no</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Sugar free?</description>
+        <option>
+            <description>Sugar free</description>
+            <then>
+                <fact name="sugar_free">yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>Sugar</description>
+            <then>
+                <fact name="sugar_free">no</fact>
+            </then>
+        </option>
+    </question>
+</knowledge>
