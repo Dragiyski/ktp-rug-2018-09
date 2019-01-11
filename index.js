@@ -21,7 +21,8 @@
         env.REQUEST_URI = req.url;
         env.QUERY_STRING = u.search;
         env.REQUEST_METHOD = req.method;
-        let p = child_process.spawn(executable, [], {
+        let kb = path.resolve(__dirname, 'crossing.xml');
+        let p = child_process.spawn(executable, [kb], {
             cwd: path.resolve(__dirname, 'kennissysteem'),
             env: env,
             stdio: ['pipe', 'pipe', 'inherit']

@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'GET' && $_SERVER['REQUEST_METHOD'] !== 'HEAD'
     parse_str($postData, $_POST);
 }
 
-$file = __DIR__ . '/knowledgebases/crossing.xml';
+$file = $_SERVER['argv'][1];
 
 $frontend = new WebFrontend($file);
 $frontend->main();
