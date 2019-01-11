@@ -31,7 +31,9 @@
         });
         req.pipe(p.stdin);
         res.setHeader('content-type', 'text/html');
-        p.stdout.pipe(res);
+        p.once('end', () => {
+            res.write('test', 'utf8');
+        }).stdout.pipe(res);
     });
 
     app.get('/:path', express.static(path.resolve(__dirname, 'kennissysteem/www')));
