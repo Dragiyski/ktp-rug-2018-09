@@ -1,7 +1,7 @@
 <?php
 
 error_reporting(E_ALL);
-ini_set('display_errors', true);
+ini_set('display_errors', false);
 ini_set('assert.exception', '1');
 
 
