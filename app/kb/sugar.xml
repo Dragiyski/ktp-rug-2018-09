@@ -231,13 +231,13 @@
     <question>
         <description>Are you willing to consume beverages which contain artificial sweeteners?</description>
         <option>
-            <description>Yes, recommended beverages can contain caffeine</description>
+            <description>Yes, recommended beverages can contain artificial sweeteners</description>
             <then>
                 <fact name="artificial_sweeteners_okay">yes</fact>
             </then>
         </option>
         <option>
-            <description>No, recommended beverages should NOT contain caffeine</description>
+            <description>No, recommended beverages should NOT contain artificial sweeteners</description>
             <then>
                 <fact name="artificial_sweeteners_okay">no</fact>
             </then>
@@ -245,17 +245,17 @@
     </question>
 
     <question>
-        <description>Are you willing to consume beverages which contain NO sugar i.e are sugar free?</description>
+        <description>Are you willing to consume beverages which contain sugar?</description>
         <option>
-            <description>Yes, recommended beverages have to be sugar-free</description>
+            <description>Yes, recommended beverages MUST contain sugar as a sweetener.</description>
             <then>
-                <fact name="sugar_free">yes</fact>
+                <fact name="sugar_free">no</fact>
             </then>
         </option>
         <option>
-            <description>No, recommended beverages can contain sugar i.e. are NOT sugar-free</description>
+            <description>No, recommended beverages should be sugar-free (i.e. should NOT contain any sugar).</description>
             <then>
-                <fact name="sugar_free">no</fact>
+                <fact name="sugar_free">yes</fact>
             </then>
         </option>
         <option>
