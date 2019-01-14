@@ -8,7 +8,7 @@ require_once __DIR__ . '/../webfrontend.php';
 date_default_timezone_set('Europe/Amsterdam');
 
 $errors = array();
-$kbFile = __DIR__ . '/../../sugar.xml';
+$kbFile = __DIR__ . '/../kb/sugar.xml';
 
 $frontEnd = new WebFrontend($kbFile);
 header('Content-Type: text/html; charset=utf-8', true);

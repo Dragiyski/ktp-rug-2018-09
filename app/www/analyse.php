@@ -5,7 +5,7 @@ require_once __DIR__ . '/../solver.php';
 require_once __DIR__ . '/../reader.php';
 require_once __DIR__ . '/../formatter.php';
 
-$kbFile = __DIR__ . '/../../sugar.xml';
+$kbFile = __DIR__ . '/../kb/sugar.xml';
 
 $reader = new KnowledgeBaseReader;
 $state = $reader->parse($kbFile);
