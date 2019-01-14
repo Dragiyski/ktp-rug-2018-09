@@ -1,18 +1,14 @@
 <?php
 
-include '../util.php';
-include '../solver.php';
-include '../reader.php';
-include '../formatter.php';
+require_once __DIR__ . '/../util.php';
+require_once __DIR__ . '/../solver.php';
+require_once __DIR__ . '/../reader.php';
+require_once __DIR__ . '/../formatter.php';
 
-if (!preg_match('/^[a-zA-Z0-9_\-\.]+\.xml$/i', $_GET['kb']))
-	die('Doe eens niet!');
+$kbFile = __DIR__ . '/../../sugar.xml';
 
 $reader = new KnowledgeBaseReader;
-$state = $reader->parse(first_found_path(array(
-	'./' . $_GET['kb'],
-	'../knowledgebases/' . $_GET['kb']
-)));
+$state = $reader->parse($kbFile);
 
 class FactStatistics
 {

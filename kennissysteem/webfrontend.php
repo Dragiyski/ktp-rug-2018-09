@@ -1,9 +1,9 @@
 <?php
 
-include __DIR__ . '/../util.php';
-include __DIR__ . '/../solver.php';
-include __DIR__ . '/../reader.php';
-include __DIR__ . '/../formatter.php';
+require_once __DIR__ . '/util.php';
+require_once __DIR__ . '/solver.php';
+require_once __DIR__ . '/reader.php';
+require_once __DIR__ . '/formatter.php';
 
 function _encode($data)
 {
