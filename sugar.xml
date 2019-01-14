@@ -269,7 +269,7 @@
     <question>
         <description>Should the recommended beverages be carbonated?</description>
         <option>
-            <description>Yes, the recommended beverages should be carbonated<description>
+            <description>Yes, the recommended beverages should be carbonated</description>
             <then>
                 <fact name="carbonated">yes</fact>
             </then>
@@ -333,7 +333,9 @@
     </question>
 
     <question>
-        <description>Do you prefer single-use smaller containers or multi-use larger containers e.g. 6 cans of coca-cola vs a 2L bottle of coca-cola</description>
+        <description>
+            Do you prefer single-use smaller containers or multi-use larger containers e.g. 6 cans of coca-cola vs a 2L bottle of coca-cola
+        </description>
         <option>
             <description>I prefer single use, smaller containers.</description>
             <then>
