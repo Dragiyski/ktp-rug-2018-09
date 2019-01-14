@@ -5,15 +5,21 @@
     const path = require('path');
     const child_process = require('child_process');
     const url = require('url');
+    const cookieParser = require('cookie-parser');
+    const cookieSession = require('cookie-session');
 
     const app = express();
 
-    app.use((req, res, next) => {
+    app.use(cookieParser());
+    app.use(cookieSession({
+        httpOnly: true,
+        name: 'session',
+        secret: 'This is a random string determined by throwing a dice. It yield 4'
+    }));
+
+    app.all('/', (req, res, next) => {
         let u = req.protocol + '://' + req.headers.host + req.url;
         u = new URL(u);
-        if(u.pathname !== '/') {
-            return void next();
-        }
         let executable = path.resolve(__dirname, 'kennissysteem/web.php');
         let env = process.env;
         env.CLI_ROOT = path.resolve(__dirname, 'kennissysteem/www');
@@ -36,6 +42,14 @@
         p.once('exit', (code, signal) => {
             let j = 0;
         });
+    });
+
+    app.all('/json', (req, res, next) => {
+        let session = req.session;
+        let json = {
+            state: session.solver_state
+        };
+        debugger;
     });
 
     app.get('/:path', express.static(path.resolve(__dirname, 'kennissysteem/www')));

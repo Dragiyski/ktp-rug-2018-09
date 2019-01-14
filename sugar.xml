@@ -8,6 +8,13 @@
         <answer value="average">Average/Normal</answer>
         <answer value="expensive">Expensive</answer>
     </goal>
+    <goal name="diet">
+        <description>Diet</description>
+        <answer value="lt_2000">Less than 2000</answer>
+        <answer value="2000">Around 2000</answer>
+        <answer value="2500">Around 2500</answer>
+        <answer value="gt_2500">More than 2500</answer>
+    </goal>
     <goal name="company">
         <description>Company</description>
         <answer value="coca-cola">Coca Cola</answer>
@@ -17,6 +24,26 @@
         <description>Artificial Sweeteners</description>
         <answer value="yes">Yes</answer>
         <answer value="no">No</answer>
+    </goal>
+    <goal name="carbonated">
+        <description>Carbonated</description>
+        <answer value="yes">Yes</answer>
+        <answer value="no">No</answer>
+    </goal>
+    <goal name="has_caffeine">
+        <description>Caffeine</description>
+        <answer value="yes">Yes</answer>
+        <answer value="no">No</answer>
+    </goal>
+    <goal name="energy_drink">
+        <description>Energy drink</description>
+        <answer value="yes">Yes</answer>
+        <answer value="no">No</answer>
+    </goal>
+    <goal name="package_size">
+        <description>Package size</description>
+        <answer value="small">Small</answer>
+        <answer value="large">Large</answer>
     </goal>
     <goal name="sugar_free">
         <description>Sugar free</description>
@@ -59,6 +86,44 @@
             <fact name="artificial_sweeterners">no</fact>
         </then>
     </rule>
+    <rule>
+        <description>Caffeine</description>
+        <if>
+            <and>
+                <fact name="energy_drink">yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="has_caffeine">yes</fact>
+        </then>
+    </rule>
+    <rule>
+        <description>Diversity:no</description>
+        <if>
+            <or>
+                <fact name="diversity">no</fact>
+                <fact name="weekly_usage">heavy</fact>
+            </or>
+        </if>
+        <then>
+            <fact name="package_size">large</fact>
+        </then>
+    </rule>
+    <rule>
+        <description>Diversity:yes</description>
+        <if>
+            <and>
+                <or>
+                    <fact name="diversity">yes</fact>
+                    <fact name="weekly_usage">light</fact>
+                </or>
+                <fact name="sugar_free">yes</fact>
+            </and>
+        </if>
+        <then>
+            <fact name="package_size">small</fact>
+        </then>
+    </rule>
 
     <question>
         <description>How much money are you willing to spend per day on soft drinks?</description>
@@ -93,12 +158,6 @@
             <description>No</description>
             <then>
                 <fact name="has-brand-loyalty">no</fact>
-            </then>
-        </option>
-        <option>
-            <description>I don't know</description>
-            <then>
-                <fact name="has-brand-loyalty">undefined</fact>
             </then>
         </option>
     </question>
@@ -150,6 +209,171 @@
             <description>Sugar</description>
             <then>
                 <fact name="sugar_free">no</fact>
+            </then>
+        </option>
+        <option>
+            <description>I do not care.</description>
+            <then>
+                <fact name="sugar_free">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Carbonated?</description>
+        <option>
+            <description>Carbonated.</description>
+            <then>
+                <fact name="carbonated">yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>Flat.</description>
+            <then>
+                <fact name="carbonated">no</fact>
+            </then>
+        </option>
+        <option>
+            <description>I do not care.</description>
+            <then>
+                <fact name="carbonated">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Energy Drink?</description>
+        <option>
+            <description>Energy.</description>
+            <then>
+                <fact name="energy_drink">yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>Not an energy drink.</description>
+            <then>
+                <fact name="energy_drink">no</fact>
+            </then>
+        </option>
+        <option>
+            <description>I do not care.</description>
+            <then>
+                <fact name="energy_drink">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Caffeine?</description>
+        <option>
+            <description>Caffeine.</description>
+            <then>
+                <fact name="has_caffeine">yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>Should not have caffeine.</description>
+            <then>
+                <fact name="has_caffeine">no</fact>
+            </then>
+        </option>
+        <option>
+            <description>I do not care.</description>
+            <then>
+                <fact name="has_caffeine">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Prefer single use quantity or long-term use quantity</description>
+        <option>
+            <description>Single use.</description>
+            <then>
+                <fact name="package_size">small</fact>
+            </then>
+        </option>
+        <option>
+            <description>Long-term use.</description>
+            <then>
+                <fact name="package_size">large</fact>
+            </then>
+        </option>
+        <option>
+            <description>I do not care.</description>
+            <then>
+                <fact name="package_size">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Different drink every day?</description>
+        <option>
+            <description>Different</description>
+            <then>
+                <fact name="diversity">yes</fact>
+            </then>
+        </option>
+        <option>
+            <description>Same drink</description>
+            <then>
+                <fact name="diversity">no</fact>
+            </then>
+        </option>
+        <option>
+            <description>No preference</description>
+            <then>
+                <fact name="diversity">undefined</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>How much soft drinks are consumed per week?</description>
+        <option>
+            <description>Less than 2.5L per week</description>
+            <then>
+                <fact name="weekly_usage">light</fact>
+            </then>
+        </option>
+        <option>
+            <description>Between 2.5L and 7L per week</description>
+            <then>
+                <fact name="weekly_usage">moderate</fact>
+            </then>
+        </option>
+        <option>
+            <description>More than 7L per week</description>
+            <then>
+                <fact name="weekly_usage">heavy</fact>
+            </then>
+        </option>
+    </question>
+    <question>
+        <description>Are you on a diet?</description>
+        <option>
+            <description>Less than 2000 kCal</description>
+            <then>
+                <fact name="diet">lt_2000</fact>
+            </then>
+        </option>
+        <option>
+            <description>Around 2000 kCal</description>
+            <then>
+                <fact name="diet">2000</fact>
+            </then>
+        </option>
+        <option>
+            <description>Around 2500 kCal</description>
+            <then>
+                <fact name="diet">2500</fact>
+            </then>
+        </option>
+        <option>
+            <description>More than 2500 kCal</description>
+            <then>
+                <fact name="diet">gt_2500</fact>
+            </then>
+        </option>
+        <option>
+            <description>I do not follow any diet</description>
+            <then>
+                <fact name="diet">undefined</fact>
             </then>
         </option>
     </question>

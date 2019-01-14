@@ -19,7 +19,7 @@ class KnowledgeBaseReader
 	 * Leest een knowledge base in.
 	 *
 	 * @param string file bestandsnaam van knowledge.xml
-	 * @return KnowledgeState
+	 * @return KnowledgeDomain
 	 */
 	public function parse($file)
 	{
