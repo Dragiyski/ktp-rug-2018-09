@@ -167,7 +167,7 @@
 <!-- QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS -->
 
     <question>
-        <description>How much money are you willing to spend per day on the single most expensive product you buy?</description>
+        <description>How much money are you willing to spend per day on the single most expensive beverage you buy?</description>
         <option>
             <description>Less than EUR 2.00</description>
             <then>
@@ -253,7 +253,7 @@
             </then>
         </option>
         <option>
-            <description>Yes, recommended beverages can contain sugar i.e. are NOT sugar-free</description>
+            <description>No, recommended beverages can contain sugar i.e. are NOT sugar-free</description>
             <then>
                 <fact name="sugar_free">no</fact>
             </then>
@@ -403,7 +403,7 @@
     </question>
 
     <question>
-        <description>What is your daily calorie intake</description>
+        <description>What is your daily calorie intake?</description>
         <option>
             <description>Less than 2000 kCal</description>
             <then>
