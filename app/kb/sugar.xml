@@ -10,41 +10,41 @@
 
     <goal name="price">
         <description>Amount of money spent on the single most expensive drink per day</description>
-        <answer value="cheap">Cheap</answer>
-        <answer value="average">Average/Normal</answer>
-        <answer value="expensive">Expensive</answer>
+        <answer value="&lt; 2">Cheap</answer>
+        <answer value="between 2 and 5">Average/Normal</answer>
+        <answer value="&gt; 5">Expensive</answer>
     </goal>
     <goal name="diet">
         <description>Calorie intake per day</description>
-        <answer value="lt_2000">Less than 2000 kCal</answer>
+        <answer value="&lt; 2000">Less than 2000 kCal</answer>
         <answer value="2000">Around 2000 kCal</answer>
         <answer value="2500">Around 2500 kCal</answer>
-        <answer value="gt_2500">More than 2500 kCal</answer>
+        <answer value="&gt; 2500">More than 2500 kCal</answer>
     </goal>
-    <goal name="company">
+    <goal name="manufacturer">
         <description>Major soft drink manufacturers</description>
-        <answer value="coca-cola">Coca Cola</answer>
-        <answer value="pepsi-cola">Pepsi Cola</answer>
+        <answer value="Coca Cola">Coca Cola</answer>
+        <answer value="Pepsi Co.">Pepsi Cola</answer>
     </goal>
-    <goal name="artificial_sweeterners">
+    <goal name="has_sweeteners">
         <description>Determines if the customer consents to consuming artificial sweeteners</description>
-        <answer value="yes">Yes</answer>
-        <answer value="no">No</answer>
+        <answer value="1">Yes</answer>
+        <answer value="0">No</answer>
     </goal>
-    <goal name="carbonated">
-        <description>Determines if the customer consumes carbonated drinks</description>
-        <answer value="yes">Yes</answer>
-        <answer value="no">No</answer>
+    <goal name="is_carbonated">
+        <description>Determines if the customer consumes is_carbonated drinks</description>
+        <answer value="1">Yes</answer>
+        <answer value="0">No</answer>
     </goal>
     <goal name="has_caffeine">
         <description>Determines if the customer consumes drinks containing caffeine</description>
-        <answer value="yes">Yes</answer>
-        <answer value="no">No</answer>
+        <answer value="1">Yes</answer>
+        <answer value="0">No</answer>
     </goal>
     <goal name="energy_drink">
         <description>Determines if the customer consumes energy drinks</description>
-        <answer value="yes">Yes</answer>
-        <answer value="no">No</answer>
+        <answer value="1">Yes</answer>
+        <answer value="0">No</answer>
     </goal>
     <goal name="package_size">
         <description>Determines if preferred package size</description>
@@ -61,35 +61,35 @@
 
     <rule>
         <description>
-            If the customer has a given brand loyalty and the company he/she
-            is loyal to is the Coca-Cola Co. determine that customer
-            prefers all products from said company.
+            If the customer has a given brand loyalty and the manufacturer he/she
+            is loyal to is the Coca Cola Co. determine that customer
+            prefers all products from said manufacturer.
         </description>
         <if>
             <and>
                 <fact name="has-brand-loyalty">yes</fact>
-                <fact name="loyat_to">coca-cola</fact>
+                <fact name="loyat_to">Coca Cola</fact>
             </and>
         </if>
         <then>
-            <fact name="company">coca-cola</fact>
+            <fact name="manufacturer">Coca Cola</fact>
         </then>
     </rule>
 
     <rule>
         <description>
-            If the customer has a given brand loyalty and the company he/she
+            If the customer has a given brand loyalty and the manufacturer he/she
             is loyal to is PepsiCo. determine that customer
-            prefers all products from said company.
+            prefers all products from said manufacturer.
         </description>
         <if>
             <and>
                 <fact name="has-brand-loyalty">yes</fact>
-                <fact name="loyat_to">pepsi-cola</fact>
+                <fact name="loyat_to">Pepsi Co.</fact>
             </and>
         </if>
         <then>
-            <fact name="company">pepsi-cola</fact>
+            <fact name="manufacturer">Pepsi Co.</fact>
         </then>
     </rule>
 
@@ -106,7 +106,7 @@
             </and>
         </if>
         <then>
-            <fact name="artificial_sweeterners">no</fact>
+            <fact name="has_sweeteners">0</fact>
         </then>
     </rule>
 
@@ -117,11 +117,11 @@
         </description>
         <if>
             <and>
-                <fact name="energy_drink">yes</fact>
+                <fact name="energy_drink">1</fact>
             </and>
         </if>
         <then>
-            <fact name="has_caffeine">yes</fact>
+            <fact name="has_caffeine">1</fact>
         </then>
     </rule>
 
@@ -171,19 +171,19 @@
         <option>
             <description>Less than EUR 2.00</description>
             <then>
-                <fact name="price">cheap</fact>
+                <fact name="price">&lt; 2</fact>
             </then>
         </option>
         <option>
             <description>Between EUR 2.00 and EUR 5.00</description>
             <then>
-                <fact name="price">average</fact>
+                <fact name="price">between 2 and 5</fact>
             </then>
         </option>
         <option>
             <description>More than EUR 5.00</description>
             <then>
-                <fact name="price">expensive</fact>
+                <fact name="price">&gt; 5</fact>
             </then>
         </option>
     </question>
@@ -191,7 +191,7 @@
     <question>
         <description>
             Are you extremely loyal to a given brand i.e. will not consume a 
-            given product if produced by a different company? For example, coca-cola and pepsi.</description>
+            given product if produced by a different manufacturer? For example, Coca Cola and pepsi.</description>
         <option>
             <description>Yes</description>
             <then>
@@ -209,15 +209,15 @@
     <question>
         <description>Which of the major manufacturers are you loyal to?</description>
         <option>
-            <description>The Coca-Cola Company</description>
+            <description>The Coca Cola manufacturer</description>
             <then>
-                <fact name="loyat_to">coca-cola</fact>
+                <fact name="loyat_to">Coca Cola</fact>
             </then>
         </option>
         <option>
             <description>PepsiCo, Inc.</description>
             <then>
-                <fact name="loyat_to">pepsi-cola</fact>
+                <fact name="loyat_to">Pepsi Co.</fact>
             </then>
         </option>
         <option>
@@ -267,23 +267,23 @@
     </question>
 
     <question>
-        <description>Should the recommended beverages be carbonated?</description>
+        <description>Should the recommended beverages be is_carbonated?</description>
         <option>
-            <description>Yes, the recommended beverages should be carbonated</description>
+            <description>Yes, the recommended beverages should be is_carbonated</description>
             <then>
-                <fact name="carbonated">yes</fact>
+                <fact name="is_carbonated">1</fact>
             </then>
         </option>
         <option>
-            <description>No, the recommended beverages should NOT be carbonated i.e. flat</description>
+            <description>No, the recommended beverages should NOT be is_carbonated i.e. flat</description>
             <then>
-                <fact name="carbonated">no</fact>
+                <fact name="is_carbonated">0</fact>
             </then>
         </option>
         <option>
             <description>I do not care about the carbonation of the recommended beverages</description>
             <then>
-                <fact name="carbonated">undefined</fact>
+                <fact name="is_carbonated">undefined</fact>
             </then>
         </option>
     </question>
@@ -293,13 +293,13 @@
         <option>
             <description>Yes, the recommended beverages can be energy drinks</description>
             <then>
-                <fact name="energy_drink">yes</fact>
+                <fact name="energy_drink">1</fact>
             </then>
         </option>
         <option>
             <description>No, I do not consume energy drinks</description>
             <then>
-                <fact name="energy_drink">no</fact>
+                <fact name="energy_drink">0</fact>
             </then>
         </option>
         <option>
@@ -315,13 +315,13 @@
         <option>
             <description>Yes, recommended beverages should contain caffeine</description>
             <then>
-                <fact name="has_caffeine">yes</fact>
+                <fact name="has_caffeine">1</fact>
             </then>
         </option>
         <option>
             <description>No, recommended beverages should NOT contain caffeine</description>
             <then>
-                <fact name="has_caffeine">no</fact>
+                <fact name="has_caffeine">0</fact>
             </then>
         </option>
         <option>
@@ -334,7 +334,7 @@
 
     <question>
         <description>
-            Do you prefer single-use smaller containers or multi-use larger containers e.g. 6 cans of coca-cola vs a 2L bottle of coca-cola
+            Do you prefer single-use smaller containers or multi-use larger containers e.g. 6 cans of Coca Cola vs a 2L bottle of Coca Cola
         </description>
         <option>
             <description>I prefer single use, smaller containers.</description>
@@ -407,7 +407,7 @@
         <option>
             <description>Less than 2000 kCal</description>
             <then>
-                <fact name="diet">lt_2000</fact>
+                <fact name="diet">&lt; 2000</fact>
             </then>
         </option>
         <option>
@@ -425,7 +425,7 @@
         <option>
             <description>More than 2500 kCal</description>
             <then>
-                <fact name="diet">gt_2500</fact>
+                <fact name="diet">&gt; 2500</fact>
             </then>
         </option>
         <option>
