@@ -18,7 +18,7 @@
             <tr>
                 <td><img class="product-image" src="/<?= $product['image'] ?>" alt="" /></td>
                 <td><?= $product['name'] ?></td>
-                <td class="numeric"><?= $product['price'] ?></td>
+                <td class="numeric">&euro; <?= number_format($product['price'], 2, '.', '') ?></td>
                 <td class="numeric"><?= $product['sugar'] ?></td>
                 <td class="numeric"><?= $product['calories'] ?></td>
             </tr>
