@@ -1,6 +1,8 @@
 {
     "require-dev": {
-        "heroku/heroku-buildpack-php": "^148.0",
+        "heroku/heroku-buildpack-php": "^148.0"
+    },
+    "require": {
         "ext-pdo_sqlite": "*"
     }
 }
