@@ -45,7 +45,7 @@ function expert_advice_product(KnowledgeDomain $domain, KnowledgeState $state) {
         $filters[] = "energy_drink = 0";
     }
     if(isset($state->facts['diet']) && is_numeric($state->facts['diet'])) {
-        $maxSugarPerDay = ($state->facts['diet'] / 4) * (2.5 / 100);
+        $maxSugarPerDay = ($state->facts['diet'] / 4) * (5 / 100);
         $filters[] = "sugar <= $maxSugarPerDay";
     }
     if(isset($state->facts['price']) && is_numeric($state->facts['price'])) {
@@ -72,9 +72,12 @@ function expert_advice_product(KnowledgeDomain $domain, KnowledgeState $state) {
         $products[] = $row;
     }
     $result->closeCursor();
-    var_dump($facts);
-    var_dump($filters);
-    var_dump($sql);
-    var_dump($products);
-    exit;
+//    var_dump($facts);
+//    var_dump($filters);
+//    var_dump($sql);
+//    var_dump($products);
+//    exit;
+    $template = new Template('templates/products.phtml');
+    $template->products = $products;
+    return $template;
 }

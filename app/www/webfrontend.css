@@ -468,3 +468,31 @@ ul.popover {
 	list-style: none;
 	padding: 10px;
 }
+
+table.product-table {
+	border-collapse: collapse;
+}
+
+table.product-table td, table.product-table th {
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	padding: 8px;
+}
+
+table.product-table td.numeric, table.product-table th.numeric {
+	text-align: center;
+	vertical-align: middle;
+	border-left: 1px solid #CCC;
+	/*border-right: 1px solid #CCC;*/
+}
+
+table.product-table .product-image {
+	width: 100px;
+}
+.block-center {
+	margin: 0 auto;
+	width: fit-content;
+	width: -ms-fit-content;
+	width: -webkit-fit-content;
+	width: -moz-fit-content;
+}

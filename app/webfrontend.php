@@ -98,7 +98,7 @@ class WebFrontend {
                 $page = new Template('templates/diet.phtml');
                 $page->fact = 'diet';
             } else {
-                expert_advice_product($domain, $state);
+                $page = expert_advice_product($domain, $state);
             }
         } catch (Exception | Error $e) {
             $page = new Template('templates/exception.phtml');
