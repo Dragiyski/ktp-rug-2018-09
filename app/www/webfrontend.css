@@ -9,10 +9,17 @@ body {
 	margin-top: 36px;
 }
 
+button {
+	font: 14px/1.6 "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
 @media(min-width: 800px) {
 	body {
 		font-size: 16px;
 		line-height:1.6;
+	}
+	button {
+		font-size: 16px;
 	}
 }
 
@@ -152,7 +159,7 @@ table {
 	padding: 0;
 }
 
-.question .options label {
+.question .options label, .question .options button {
 	display: block;
 	margin: 0.2em;
 	padding: 0.5em 1em;
@@ -162,6 +169,7 @@ table {
 	background: #F2F2F2;
 	background: -webkit-linear-gradient(top, whiteSmoke, #F1F1F1);
 	border-radius: 2px;
+	width: 100%;
 }
 
 .question .options label:hover {

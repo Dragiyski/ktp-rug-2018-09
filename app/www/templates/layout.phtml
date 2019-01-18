@@ -84,8 +84,9 @@
 		$('.question > .options > li')
 			.addClass('single-click')
 			.click(function(e) {
-				if (e.target.nodeName == 'A')
-					return;
+				if (e.target.nodeName !== 'INPUT' || e.target.type !== 'radio') {
+                    return;
+                }
 
 				var radio = $(this).find('input[type=radio]');
 				radio.prop('checked', true);
@@ -93,7 +94,11 @@
 				radio.get(0).form.submit();
 			});
 		
-		$('.question button[type=submit]').hide();
+		$('.question').each((index, element) => {
+		    if(!$(element).hasClass('custom')) {
+		        $('button[type=submit]', element).hide();
+            }
+        });
 
 		var panel = $('#debug-info');
 

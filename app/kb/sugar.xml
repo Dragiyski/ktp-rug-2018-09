@@ -8,19 +8,19 @@
 
 <!-- GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS -->
 
-    <goal name="price">
+    <!--<goal name="price">
         <description>Amount of money spent on the single most expensive drink per day</description>
         <answer value="&lt; 2">Cheap</answer>
         <answer value="between 2 and 5">Average/Normal</answer>
         <answer value="&gt; 5">Expensive</answer>
-    </goal>
-    <goal name="diet">
+    </goal>-->
+    <!--<goal name="diet">
         <description>Calorie intake per day</description>
         <answer value="&lt; 2000">Less than 2000 kCal</answer>
-        <answer value="2000">Around 2000 kCal</answer>
-        <answer value="2500">Around 2500 kCal</answer>
+        <answer value="= 2000">Around 2000 kCal</answer>
+        <answer value="= 2500">Around 2500 kCal</answer>
         <answer value="&gt; 2500">More than 2500 kCal</answer>
-    </goal>
+    </goal>-->
     <goal name="manufacturer">
         <description>Major soft drink manufacturers</description>
         <answer value="Coca Cola">Coca Cola</answer>
@@ -32,7 +32,7 @@
         <answer value="0">No</answer>
     </goal>
     <goal name="is_carbonated">
-        <description>Determines if the customer consumes is_carbonated drinks</description>
+        <description>Determines if the customer consumes carbonated drinks</description>
         <answer value="1">Yes</answer>
         <answer value="0">No</answer>
     </goal>
@@ -67,8 +67,8 @@
         </description>
         <if>
             <and>
-                <fact name="has-brand-loyalty">yes</fact>
-                <fact name="loyat_to">Coca Cola</fact>
+                <fact name="has_brand_loyalty">yes</fact>
+                <fact name="loyal_to">Coca Cola</fact>
             </and>
         </if>
         <then>
@@ -84,8 +84,8 @@
         </description>
         <if>
             <and>
-                <fact name="has-brand-loyalty">yes</fact>
-                <fact name="loyat_to">Pepsi Co.</fact>
+                <fact name="has_brand_loyalty">yes</fact>
+                <fact name="loyal_to">Pepsi Co.</fact>
             </and>
         </if>
         <then>
@@ -166,7 +166,7 @@
 
 <!-- QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS -->
 
-    <question>
+    <!--<question>
         <description>How much money are you willing to spend per day on the single most expensive beverage you buy?</description>
         <option>
             <description>Less than EUR 2.00</description>
@@ -177,16 +177,16 @@
         <option>
             <description>Between EUR 2.00 and EUR 5.00</description>
             <then>
-                <fact name="price">between 2 and 5</fact>
+                <fact name="price">&lt; 5</fact>
             </then>
         </option>
         <option>
             <description>More than EUR 5.00</description>
             <then>
-                <fact name="price">&gt; 5</fact>
+                <fact name="price">undefined</fact>
             </then>
         </option>
-    </question>
+    </question>-->
 
     <question>
         <description>
@@ -195,13 +195,13 @@
         <option>
             <description>Yes</description>
             <then>
-                <fact name="has-brand-loyalty">yes</fact>
+                <fact name="has_brand_loyalty">yes</fact>
             </then>
         </option>
         <option>
             <description>No</description>
             <then>
-                <fact name="has-brand-loyalty">no</fact>
+                <fact name="has_brand_loyalty">no</fact>
             </then>
         </option>
     </question>
@@ -209,21 +209,21 @@
     <question>
         <description>Which of the major manufacturers are you loyal to?</description>
         <option>
-            <description>The Coca Cola manufacturer</description>
+            <description>The Coca Cola Company</description>
             <then>
-                <fact name="loyat_to">Coca Cola</fact>
+                <fact name="loyal_to">Coca Cola</fact>
             </then>
         </option>
         <option>
             <description>PepsiCo, Inc.</description>
             <then>
-                <fact name="loyat_to">Pepsi Co.</fact>
+                <fact name="loyal_to">Pepsi Co.</fact>
             </then>
         </option>
         <option>
             <description>Other</description>
             <then>
-                <fact name="loyat_to">undefined</fact>
+                <fact name="loyal_to">undefined</fact>
             </then>
         </option>
     </question>
@@ -267,15 +267,15 @@
     </question>
 
     <question>
-        <description>Should the recommended beverages be is_carbonated?</description>
+        <description>Should the recommended beverages be carbonated?</description>
         <option>
-            <description>Yes, the recommended beverages should be is_carbonated</description>
+            <description>Yes, the recommended beverages should be carbonated</description>
             <then>
                 <fact name="is_carbonated">1</fact>
             </then>
         </option>
         <option>
-            <description>No, the recommended beverages should NOT be is_carbonated i.e. flat</description>
+            <description>No, the recommended beverages should NOT be carbonated i.e. flat</description>
             <then>
                 <fact name="is_carbonated">0</fact>
             </then>
@@ -402,7 +402,7 @@
         </option>
     </question>
 
-    <question>
+    <!--<question>
         <description>What is your daily calorie intake?</description>
         <option>
             <description>Less than 2000 kCal</description>
@@ -413,13 +413,13 @@
         <option>
             <description>Around 2000 kCal</description>
             <then>
-                <fact name="diet">2000</fact>
+                <fact name="diet">= 2000</fact>
             </then>
         </option>
         <option>
             <description>Around 2500 kCal</description>
             <then>
-                <fact name="diet">2500</fact>
+                <fact name="diet">= 2500</fact>
             </then>
         </option>
         <option>
@@ -434,5 +434,5 @@
                 <fact name="diet">undefined</fact>
             </then>
         </option>
-    </question>
+    </question>-->
 </knowledge>

@@ -1,0 +1,21 @@
+<?php $this->extends('layout.phtml') ?>
+
+<?php $this->begin('content') ?>
+    <section class="question custom">
+        <p>How much money are you willing to spend per day on the single most expensive beverage you buy?</p>
+
+        <p>
+            &euro; <input type="number" step="0.01" min="0" placeholder="Fill the price here" name="answer[<?= $fact ?>]" />
+        </p>
+
+        <ol class="options">
+            <li class="single-click">
+                <button type="submit">Submit</button>
+            </li>
+            <li class="single-click">
+                <button type="submit" name="answer[<?= $fact ?>]" value="undefined">Skip, if not applicable</button>
+            </li>
+        </ol>
+
+    </section>
+<?php $this->end() ?>

@@ -4,144 +4,148 @@ require_once __DIR__ . '/util.php';
 require_once __DIR__ . '/solver.php';
 require_once __DIR__ . '/reader.php';
 require_once __DIR__ . '/formatter.php';
+require_once __DIR__ . '/expert-system.php';
 
-function _encode($data)
-{
-	return base64_encode(gzcompress(serialize($data)));
+function _encode($data) {
+    return base64_encode(gzcompress(serialize($data)));
 }
 
-function _decode($data)
-{
-	return unserialize(gzuncompress(base64_decode($data)));
+function _decode($data) {
+    return unserialize(gzuncompress(base64_decode($data)));
 }
 
-class WebLogger implements Logger
-{
-	public $messages = array(array());
+class WebLogger implements Logger {
+    public $messages = array(array());
 
-	public function __wakeup()
-	{
-		$this->messages[] = array();
-	}
+    public function __wakeup() {
+        $this->messages[] = array();
+    }
 
-	public function write($format, $arguments, $level)
-	{
-		$arguments = array_map(function($arg) {
-			return '<tt>' . Template::html(to_debug_string($arg)) . '</tt>';
-		}, $arguments);
+    public function write($format, $arguments, $level) {
+        $arguments = array_map(
+            function ($arg) {
+                return '<tt>' . Template::html(to_debug_string($arg)) . '</tt>';
+            },
+            $arguments
+        );
 
-		$this->messages[count($this->messages) - 1][] = [$level, vsprintf($format, $arguments)];
-	}
+        $this->messages[count($this->messages) - 1][] = [$level, vsprintf($format, $arguments)];
+    }
 }
 
-class WebFrontend
-{
-	private $log;
+class WebFrontend {
+    private $log;
 
-	private $solver;
+    private $solver;
 
-	private $state;
+    private $state;
 
-	private $kb_file;
+    private $kb_file;
 
-	public function __construct($kb_file)
-	{
-		$this->kb_file = $kb_file;
-	}
+    public function __construct($kb_file) {
+        $this->kb_file = $kb_file;
+    }
 
-	public function main()
-	{
-		$domain = null;
+    public function main() {
+        $domain = null;
 
-		$state = null;
+        $state = null;
 
-		$log = $this->getLog();
-		
-		$solver = new Solver($log);
+        $log = $this->getLog();
 
-		try
-		{
-			$domain = $this->getDomain();
+        $solver = new Solver($log);
 
-			$state = $this->getState($domain);
+        try {
+            $domain = $this->getDomain();
 
-			if (isset($_POST['answer']))
-				$state->apply(_decode($_POST['answer']));
+            $state = $this->getState($domain);
 
-			switch ($domain->algorithm)
-			{
-				case 'backward-chaining':
-					$step = $solver->backwardChain($domain, $state);
-					break;
+            if (isset($_POST['answer'])) {
+                if(is_array($_POST['answer'])) {
+                    foreach($_POST['answer'] as $key => $value) {
+                        if(empty($value)) {
+                            $value = STATE_UNDEFINED;
+                        }
+                        $state->facts[$key] = $value;
+                    }
+                } else {
+                    $state->apply(_decode($_POST['answer']));
+                }
+            }
+            switch ($domain->algorithm) {
+            case 'backward-chaining':
+                $step = $solver->backwardChain($domain, $state);
+                break;
 
-				case 'forward-chaining':
-					$step = $solver->forwardChain($domain, $state);
-					break;
+            case 'forward-chaining':
+                $step = $solver->forwardChain($domain, $state);
+                break;
 
-				default:
-					throw new RuntimeException("Unknown inference algorithm. Please choose 'forward-chaining' or 'backward-chaining'.");
-			}
+            default:
+                throw new RuntimeException("Unknown inference algorithm. Please choose 'forward-chaining' or 'backward-chaining'.");
+            }
 
-			if ($step instanceof AskedQuestion)
-			{
-				$page = new Template('templates/question.phtml');
-				$page->question = $step->question;
-				$page->skippable = $step->skippable;
-			}
-			else
-			{
-				$page = new Template('templates/completed.phtml');
-			}
-		}
-		catch (Exception | Error $e)
-		{
-			$page = new Template('templates/exception.phtml');
-			$page->exception = $e;
-		}
+            if ($step instanceof AskedQuestion) {
+                $page = new Template('templates/question.phtml');
+                $page->question = $step->question;
+                $page->skippable = $step->skippable;
+            } elseif (!isset($state->facts['price'])) {
+                /* @var $state KnowledgeState */
+                    $page = new Template('templates/price.phtml');
+                    $page->fact = 'price';
+            } elseif (!isset($state->facts['diet'])) {
+                /* @var $state KnowledgeState */
+                $page = new Template('templates/diet.phtml');
+                $page->fact = 'diet';
+            } else {
+                expert_advice_product($domain, $state);
+            }
+        } catch (Exception | Error $e) {
+            $page = new Template('templates/exception.phtml');
+            $page->exception = $e;
+        }
 
-		$page->domain = $domain;
-		$page->state = $state;
-		$page->log = $log;
+        $page->domain = $domain;
+        $page->state = $state;
+        $page->log = $log;
 
-		echo $page->render();
-	}
+        echo $page->render();
+    }
 
-	private function getDomain()
-	{
-		$reader = new KnowledgeBaseReader();
-		return $reader->parse($this->kb_file);
-	}
+    private function getDomain() {
+        $reader = new KnowledgeBaseReader();
+        return $reader->parse($this->kb_file);
+    }
 
-	private function getState($domain)
-	{
-		if (isset($_POST['state']))
-			return _decode($_POST['state']);
-		else
-			return $this->createNewState($domain);
-	}
+    private function getState($domain) {
+        if (isset($_POST['state'])) {
+            return _decode($_POST['state']);
+        } else {
+            return $this->createNewState($domain);
+        }
+    }
 
-	private function createNewState($domain)
-	{
-		$state = KnowledgeState::initializeForDomain($domain);
+    private function createNewState($domain) {
+        $state = KnowledgeState::initializeForDomain($domain);
 
-		if (!empty($_GET['goals']))
-		{
-			$state->goalStack = new Stack();
+        if (!empty($_GET['goals'])) {
+            $state->goalStack = new Stack();
 
-			foreach (explode(',', $_GET['goals']) as $goal)
-				$state->goalStack->push($goal);
-		}
+            foreach (explode(',', $_GET['goals']) as $goal) {
+                $state->goalStack->push($goal);
+            }
+        }
 
-		return $state;
-	}
+        return $state;
+    }
 
-	private function getLog()
-	{
-		if (isset($_POST['log']))
-			return _decode($_POST['log']);
-		else
-			return new WebLogger();
-	}
+    private function getLog() {
+        if (isset($_POST['log'])) {
+            return _decode($_POST['log']);
+        } else {
+            return new WebLogger();
+        }
+    }
 }
 
 // if (!isset($_GET['kb']) || !preg_match('/^[a-zA-Z0-9_\-\.]+\.xml$/i', $_GET['kb'])) {
