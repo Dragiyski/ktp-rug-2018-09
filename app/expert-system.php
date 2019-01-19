@@ -26,47 +26,64 @@ function applyReasoning(&$row, KnowledgeState $state, PDO $db, &$statements) {
     if ($row['sugar_free']) {
         $row['reasons'][] = 'The product is sugar-free.';
     } else {
-        $stmt = $statements['less_than_average_sugar_in_category'];
-        /* @var $stmt PDOStatement */
-        $stmt->bindValue('category', $row['category']);
-        if (!$stmt->execute()) {
+        $statements['get_average_sugar_per_category']->bindValue('category', $row['category']);
+        if(!$statements['get_average_sugar_per_category']->execute()) {
+            $errInfo = $db->errorInfo();
+            throw new RuntimeException($errInfo[2]);
+        }
+        $average = $statements['get_average_sugar_per_category']->fetch(PDO::FETCH_NUM)[0];
+        $statements['less_than_average_sugar_in_category']->bindValue('category', $row['category']);
+        if (!$statements['less_than_average_sugar_in_category']->execute()) {
             $errInfo = $db->errorInfo();
             throw new RuntimeException($errInfo[2]);
         }
         $listIds = [];
-        while (($idRow = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
+        while (($idRow = $statements['less_than_average_sugar_in_category']->fetch(PDO::FETCH_ASSOC)) !== false) {
             $listIds[] = $idRow['id'];
         }
         unset($idRow);
         if (in_array($row['id'], $listIds)) {
-            $row['reasons'][] = 'The product contains less than the average amount of sugar within its category';
+            $row['reasons'][] = "The product contains less than the average amount ({$average}g) of sugar within its category: {$row['category']}";
         }
-        $stmt->closeCursor();
-        unset($stmt);
+        $statements['less_than_average_sugar_in_category']->closeCursor();
+
     }
     if (!$row['has_sweeteners']) {
         $row['reasons'][] = 'The product does not contain artificial sweeteners.';
     }
     if (isset($state->facts['is_carbonated']) && $state->facts['is_carbonated'] !== STATE_UNDEFINED) {
         if ($row['is_carbonated']) {
-            $row['reasons'] = 'The product is a carbonated drink.';
+            $row['reasons'][] = 'The product is a carbonated drink.';
         } else {
-            $row['reasons'] = 'The product is a flat (non-carbonated) drink';
+            $row['reasons'][] = 'The product is a flat (non-carbonated) drink';
         }
     }
     if (isset($state->facts['manufacturer']) && $state->facts['manufacturer'] !== STATE_UNDEFINED) {
         if ($row['manufacturer'] === 'Coca Cola') {
-            $row['reasons'] = 'This product is produced by the Coca Cola Company.';
+            $row['reasons'][] = 'This product is produced by the Coca Cola Company.';
         } else if ($row['manufacturer'] === 'Pepsi Co.') {
-            $row['reasons'] = 'This product is produced by the Pepsi Company.';
+            $row['reasons'][] = 'This product is produced by the Pepsi Company.';
         }
     }
     if (!isset($state->facts['energy_drink']) || $state->facts['energy_drink'] === STATE_UNDEFINED || !$state->facts['energy_drink']) {
         if (isset($state->facts['has_caffeine']) && $state->facts['has_caffeine'] !== STATE_UNDEFINED) {
             if ($row['has_caffeine']) {
-                $row['reasons'] = 'This product contains caffeine.';
+                $row['reasons'][] = 'This product contains caffeine.';
             } else {
-                $row['reasons'] = 'This product does not contain caffeine';
+                $row['reasons'][] = 'This product does not contain caffeine';
+            }
+        }
+    }
+    if(isset($state->facts['package_size'])) {
+        if($state->facts['package_size'] === 'large') {
+            if(isset($state->facts['weekly_usage']) && $state->facts['weekly_usage'] === 'heavy') {
+                $row['reasons'][] = 'This is a large package, suitable for a consumer that consumes more than 7L soft drinks per week.';
+            } else if(isset($state->facts['diversity']) && $state->facts['diversity'] === 'no') {
+                $row['reasons'][] = 'This is a large package, suitable for prolonged consumption.';
+            }
+        } else if($state->facts['package_size'] === 'small') {
+            if($row['serving_per_product'] > 3) {
+                $row['reasons'][] = 'This is a large package of many small packages, suitable for prolonged light consumption.';
             }
         }
     }
@@ -138,7 +155,12 @@ function expert_advice_product(KnowledgeDomain $domain, KnowledgeState $state) {
         $db->prepare(
             'SELECT id FROM products WHERE category = :category AND (0.0 + sugar) / serving_size * 100 > 1 AND sugar < (SELECT AVG(sugar) FROM products WHERE category = :category AND (0.0 + sugar) / serving_size * 100 > 1)'
         );
-    if ($statements['get_minimum_sugar_for_category'] === false) {
+    if ($statements['less_than_average_sugar_in_category'] === false) {
+        $errInfo = $db->errorInfo();
+        throw new RuntimeException($errInfo[2]);
+    }
+    $statements['get_average_sugar_per_category'] = $db->prepare('SELECT ROUND(AVG(sugar), 2) FROM products WHERE category = :category AND (0.0 + sugar) / serving_size * 100 > 1');
+    if($statements['get_average_sugar_per_category'] === false) {
         $errInfo = $db->errorInfo();
         throw new RuntimeException($errInfo[2]);
     }
