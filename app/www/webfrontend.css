@@ -483,7 +483,7 @@ table.product-table td.numeric, table.product-table th.numeric {
 	text-align: center;
 	vertical-align: middle;
 	border-left: 1px solid #CCC;
-	/*border-right: 1px solid #CCC;*/
+	border-right: 1px solid #CCC;
 }
 
 table.product-table .product-image {
