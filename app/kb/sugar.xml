@@ -2,47 +2,42 @@
 <knowledge>
     <title>Reduce Sugar Intake</title>
     <description>
-        Expert system which aims to provide a healthy soft drink alternative by offering drinks
-        with a low-sugar content.
+        Expert system which aims to provide a healthy soft drink
+		alternative by offering drinks with a low-sugar content.
     </description>
 
-<!-- GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS -->
-
-    <!--<goal name="price">
-        <description>Amount of money spent on the single most expensive drink per day</description>
-        <answer value="&lt; 2">Cheap</answer>
-        <answer value="between 2 and 5">Average/Normal</answer>
-        <answer value="&gt; 5">Expensive</answer>
-    </goal>-->
-    <!--<goal name="diet">
-        <description>Calorie intake per day</description>
-        <answer value="&lt; 2000">Less than 2000 kCal</answer>
-        <answer value="= 2000">Around 2000 kCal</answer>
-        <answer value="= 2500">Around 2500 kCal</answer>
-        <answer value="&gt; 2500">More than 2500 kCal</answer>
-    </goal>-->
+<!-- GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS GOALS -->
     <goal name="manufacturer">
         <description>Major soft drink manufacturers</description>
         <answer value="Coca Cola">Coca Cola</answer>
         <answer value="Pepsi Co.">Pepsi Cola</answer>
     </goal>
     <goal name="has_sweeteners">
-        <description>Determines if the customer consents to consuming artificial sweeteners</description>
+        <description>
+			Determines if the customer consents to consuming artificial
+			sweeteners
+		</description>
         <answer value="1">Yes</answer>
         <answer value="0">No</answer>
     </goal>
     <goal name="is_carbonated">
-        <description>Determines if the customer consumes carbonated drinks</description>
+        <description>
+			Determines if the customer consumes carbonated drinks
+		</description>
         <answer value="1">Yes</answer>
         <answer value="0">No</answer>
     </goal>
     <goal name="has_caffeine">
-        <description>Determines if the customer consumes drinks containing caffeine</description>
+        <description>
+			Determines if the customer consumes drinks containing caffeine
+		</description>
         <answer value="1">Yes</answer>
         <answer value="0">No</answer>
     </goal>
     <goal name="energy_drink">
-        <description>Determines if the customer consumes energy drinks</description>
+        <description>
+			Determines if the customer consumes energy drinks
+		</description>
         <answer value="1">Yes</answer>
         <answer value="0">No</answer>
     </goal>
@@ -52,17 +47,20 @@
         <answer value="large">Large</answer>
     </goal>
     <goal name="sugar_free">
-        <description>Determines if the customer would like to consume sugar free drinks</description>
+        <description>
+			Determines if the customer would like to consume sugar free
+			drinks
+		</description>
         <answer value="yes">Yes</answer>
         <answer value="no">No</answer>
     </goal>
 
-<!-- RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES -->
+<!-- RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES RULES -->
 
     <rule>
         <description>
-            If the customer has a given brand loyalty and the manufacturer he/she
-            is loyal to is the Coca Cola Co. determine that customer
+            If the customer has a given brand loyalty and the manufacturer
+			he/she is loyal to is the Coca Cola Co. determine that customer
             prefers all products from said manufacturer.
         </description>
         <if>
@@ -78,8 +76,8 @@
 
     <rule>
         <description>
-            If the customer has a given brand loyalty and the manufacturer he/she
-            is loyal to is PepsiCo. determine that customer
+            If the customer has a given brand loyalty and the manufacturer
+			he/she is loyal to is PepsiCo. determine that customer
             prefers all products from said manufacturer.
         </description>
         <if>
@@ -96,8 +94,8 @@
     <rule>
         <description>
             If the customer would like to consume sugar-free products
-            but does not approve of artificial sweeteners suggested products
-            must not contain artificial sweeteners.
+            but does not approve of artificial sweeteners suggested 
+			products must not contain artificial sweeteners.
         </description>
         <if>
             <and>
@@ -147,8 +145,8 @@
             If the customer does consume a variety of different drinks
             or consumes small amounts of a beverage and furthermore would
             like to consume sugar-free products it can be inferred that
-            the customer should buy small containers of a given beverage due
-            to its shorter shelf-life.
+            the customer should buy small containers of a given beverage
+			due to its shorter shelf-life.
         </description>
         <if>
             <and>
@@ -164,34 +162,14 @@
         </then>
     </rule>
 
-<!-- QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS -->
-
-    <!--<question>
-        <description>How much money are you willing to spend per day on the single most expensive beverage you buy?</description>
-        <option>
-            <description>Less than EUR 2.00</description>
-            <then>
-                <fact name="price">&lt; 2</fact>
-            </then>
-        </option>
-        <option>
-            <description>Between EUR 2.00 and EUR 5.00</description>
-            <then>
-                <fact name="price">&lt; 5</fact>
-            </then>
-        </option>
-        <option>
-            <description>More than EUR 5.00</description>
-            <then>
-                <fact name="price">undefined</fact>
-            </then>
-        </option>
-    </question>-->
+<!-- QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS -->
 
     <question>
         <description>
-            Are you extremely loyal to a given brand i.e. will not consume a 
-            given product if produced by a different manufacturer? For example, Coca Cola and pepsi.</description>
+            Are you extremely loyal to a given brand i.e. will not consume
+			a given product if produced by a different manufacturer? For
+			example, Coca Cola and pepsi.
+		</description>
         <option>
             <description>Yes</description>
             <then>
@@ -207,7 +185,9 @@
     </question>
 
     <question>
-        <description>Which of the major manufacturers are you loyal to?</description>
+        <description>
+			Which of the major manufacturers are you loyal to?
+		</description>
         <option>
             <description>The Coca Cola Company</description>
             <then>
@@ -229,15 +209,24 @@
     </question>
 
     <question>
-        <description>Are you willing to consume beverages which contain artificial sweeteners?</description>
+        <description>
+			Are you willing to consume beverages which contain artificial
+			sweeteners?
+		</description>
         <option>
-            <description>Yes, recommended beverages can contain artificial sweeteners</description>
+            <description>
+				Yes, recommended beverages can contain artificial 
+				sweeteners
+			</description>
             <then>
                 <fact name="artificial_sweeteners_okay">yes</fact>
             </then>
         </option>
         <option>
-            <description>No, recommended beverages should NOT contain artificial sweeteners</description>
+            <description>
+				No, recommended beverages should NOT contain artificial 
+				sweeteners
+			</description>
             <then>
                 <fact name="artificial_sweeteners_okay">no</fact>
             </then>
@@ -245,21 +234,32 @@
     </question>
 
     <question>
-        <description>Are you willing to consume beverages which contain sugar?</description>
+        <description>
+			Are you willing to consume beverages which contain sugar?
+		</description>
         <option>
-            <description>Yes, recommended beverages MUST contain sugar as a sweetener.</description>
+            <description>
+				Yes, recommended beverages MUST contain sugar as a 
+				sweetener.
+			</description>
             <then>
                 <fact name="sugar_free">no</fact>
             </then>
         </option>
         <option>
-            <description>No, recommended beverages should be sugar-free (i.e. should NOT contain any sugar).</description>
+            <description>
+				No, recommended beverages should be sugar-free
+				(i.e. should NOT contain any sugar).
+			</description>
             <then>
                 <fact name="sugar_free">yes</fact>
             </then>
         </option>
         <option>
-            <description>I do not care about the sugar content of the recommended beverages.</description>
+            <description>
+				I do not care about the sugar content of the recommended 
+				beverages.
+			</description>
             <then>
                 <fact name="sugar_free">undefined</fact>
             </then>
@@ -267,21 +267,31 @@
     </question>
 
     <question>
-        <description>Should the recommended beverages be carbonated?</description>
+        <description>
+			Should the recommended beverages be carbonated?
+		</description>
         <option>
-            <description>Yes, the recommended beverages should be carbonated</description>
+            <description>
+				Yes, the recommended beverages should be carbonated
+			</description>
             <then>
                 <fact name="is_carbonated">1</fact>
             </then>
         </option>
         <option>
-            <description>No, the recommended beverages should NOT be carbonated i.e. flat</description>
+            <description>
+				No, the recommended beverages should NOT be carbonated
+				i.e. flat
+			</description>
             <then>
                 <fact name="is_carbonated">0</fact>
             </then>
         </option>
         <option>
-            <description>I do not care about the carbonation of the recommended beverages</description>
+            <description>
+				I do not care about the carbonation of the recommended
+				beverages
+			</description>
             <then>
                 <fact name="is_carbonated">undefined</fact>
             </then>
@@ -289,9 +299,13 @@
     </question>
 
     <question>
-        <description>Are you willing to consume energy drinks</description>
+        <description>
+			Are you willing to consume energy drinks
+		</description>
         <option>
-            <description>Yes, the recommended beverages can be energy drinks</description>
+            <description>
+				Yes, the recommended beverages can be energy drinks
+			</description>
             <then>
                 <fact name="energy_drink">1</fact>
             </then>
@@ -311,21 +325,31 @@
     </question>
 
     <question>
-        <description>Are you willing to consume beverages which contain caffeine or caffeine-like alternatives</description>
+        <description>
+			Are you willing to consume beverages which contain caffeine or
+			caffeine-like alternatives
+		</description>
         <option>
-            <description>Yes, recommended beverages should contain caffeine</description>
+            <description>
+				Yes, recommended beverages should contain caffeine
+			</description>
             <then>
                 <fact name="has_caffeine">1</fact>
             </then>
         </option>
         <option>
-            <description>No, recommended beverages should NOT contain caffeine</description>
+            <description>
+				No, recommended beverages should NOT contain caffeine
+			</description>
             <then>
                 <fact name="has_caffeine">0</fact>
             </then>
         </option>
         <option>
-            <description>I do not care about the caffeine contents of the recommended beverages</description>
+            <description>
+				I do not care about the caffeine contents of the 
+				recommended beverages
+			</description>
             <then>
                 <fact name="has_caffeine">undefined</fact>
             </then>
@@ -334,16 +358,21 @@
 
     <question>
         <description>
-            Do you prefer single-use smaller containers or multi-use larger containers e.g. 6 cans of Coca Cola vs a 2L bottle of Coca Cola
+            Do you prefer single-use smaller containers or multi-use larger
+			containers e.g. 6 cans of Coca Cola vs a 2L bottle of Coca Cola
         </description>
         <option>
-            <description>I prefer single use, smaller containers.</description>
+            <description>
+				I prefer single use, smaller containers.
+			</description>
             <then>
                 <fact name="package_size">small</fact>
             </then>
         </option>
         <option>
-            <description>I prefer multi-use, larger containers.</description>
+            <description>
+				I prefer multi-use, larger containers.
+			</description>
             <then>
                 <fact name="package_size">large</fact>
             </then>
@@ -358,7 +387,8 @@
 
     <question>
         <description>
-            Do you consume a wide variety of drinks on a daily/weekly basis or do you consume only a few drinks you are loyal to?
+            Do you consume a wide variety of drinks on a daily/weekly
+			basis or do you consume only a few drinks you are loyal to?
         </description>
         <option>
             <description>I consume a wide variety of drinks</description>
@@ -381,7 +411,9 @@
     </question>
 
     <question>
-        <description>In terms of soft drinks, how much do you consume per week?</description>
+        <description>
+			In terms of soft drinks, how much do you consume per week?
+		</description>
         <option>
             <description>Less than 2.5L per week</description>
             <then>
@@ -401,38 +433,4 @@
             </then>
         </option>
     </question>
-
-    <!--<question>
-        <description>What is your daily calorie intake?</description>
-        <option>
-            <description>Less than 2000 kCal</description>
-            <then>
-                <fact name="diet">&lt; 2000</fact>
-            </then>
-        </option>
-        <option>
-            <description>Around 2000 kCal</description>
-            <then>
-                <fact name="diet">= 2000</fact>
-            </then>
-        </option>
-        <option>
-            <description>Around 2500 kCal</description>
-            <then>
-                <fact name="diet">= 2500</fact>
-            </then>
-        </option>
-        <option>
-            <description>More than 2500 kCal</description>
-            <then>
-                <fact name="diet">&gt; 2500</fact>
-            </then>
-        </option>
-        <option>
-            <description>I have no caloric restrictions on my diet</description>
-            <then>
-                <fact name="diet">undefined</fact>
-            </then>
-        </option>
-    </question>-->
 </knowledge>

@@ -19,6 +19,46 @@ bottom=4cm,
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage{eurosym}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	showstringspaces=false,
+	commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+	morestring=[b]",
+	morestring=[s]{>}{<},
+	morecomment=[s]{<?}{?>},
+	stringstyle=\color{black},
+	identifierstyle=\color{darkblue},
+	keywordstyle=\color{cyan},
+	morekeywords={xmlns,version,type,name,value}% list your attributes here
+}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},
+	basicstyle=\ttfamily,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=4
+}
 
 %opening
 \title{Knowledge Technology Practical\\ System report}
@@ -32,15 +72,15 @@ bottom=4cm,
 
 \section{Problem description}
 
-This system report aims to describe the inner workings of an expert system. The goal of the system is to provide a list of alternative products in order to reduce the sugar intake for consumers of soft drinks. The system determines the preferences of the consumer using a form of interview usually conducted by the expert. Once the consumer preferences have been determined the system provides a list of low-sugar products matching the specified preferences. If multiple products match the preferences, the ones containing the least amount of sugar are on top. The system works with a predefined set of products. This means there might be a set of consumer preferences which do not match any product.
+This system report aims to describe the inner workings of an expert system\footnote{The expert system is available at \url{https://ktp-rug-2018-09.herokuapp.com/}}. The goal of the system is to provide a list of alternative products in order to reduce the sugar intake for consumers of soft drinks. The system determines the preferences of the consumer using a form of interview usually conducted by the expert. Once the consumer preferences have been determined the system provides a list of low-sugar products matching the specified preferences. If multiple products match the preferences, the ones containing the least amount of sugar are on top. The system works with a predefined set of products. This means there might be a set of consumer preferences which do not match any product.
 
 A consumer always has a certain consumer behavior when it comes to soft drinks weather he/she is aware of it or not. It is the system's goal to determine the causes (preferences) of such a behavior using the aforementioned interview. Knowing the preferences will allow the system to determine a set of constrains for products the consumer would like to consume. Knowing the set of products matching the consumer preferences the expert or the system can advise the customer on what the healthiest (lowest amount of sugar) choice is.
 
-The user of the expert system are expected to be consumers of soft drinks which would like the reduce the sugar-intake from soft drinks in their everyday life. Another group of consumers who can use the expert system are users who would like to start consuming soft drinks without a significant impact on their health.
+The users of the expert system are expected to be consumers of soft drinks which would like the reduce the sugar-intake from soft drinks in their everyday life. Another group of consumers who can use the expert system are users who would like to start consuming soft drinks without a significant impact on their health.
 
 \section{Expert}
 
-The expert for this project is prof. dr. ir. Koert van Ittersum from the Faculty of Economics and Business at the University of Groningen. His domain of expertise is consumer well-being, consumer psychology and consumer health. Particularly, his latest research is in the area of improving the health quality of the consumer shopping basket, particularly when it comes to food and drinks.
+The expert for this project is prof. dr. ir. Koert van Ittersum from the Faculty of Economics and Business at the University of Groningen. His domain of expertise is consumer well-being, consumer psychology and consumer health. His latest research is in the area of improving the health quality of the consumer shopping basket, particularly when it comes to food and drinks.
 
 \section{Role of Knowledge Technology}
 
@@ -54,7 +94,7 @@ When no more facts can be inferred or obtained from the user the system uses all
 
 \subsection{Problem solving model}
 
-In order to solve the specified problem the system examines several areas of interest. The area of interest most aligned with the main goal has to do with the sugar content of a soft drink. More specifically the amount of sugar a drink contains, if any at all. If the drink does not contain sugar it might contain artificial sweeteners in its place, which could be unwanted by the consumer. Hence, the system needs to know the consumer's preference towards artificial sweeteners. Another way to separate the subset into two is by specifying the carbonations of the drink, more specifically, carbonated vs non-carbonated. In a similar fashion the system needs to know about the caffeine contents of the drink, if any. Very often the consumer might have preferences towards a given soft drink only because it has been made by a certain manufacturer. Hence the system needs to determine if the consumer has any such preferences or is willing to try products from a variety of manufacturers or brands. Furthermore, the consumer might have preferences towards the packaging of a soft drink. Some customers prefer buying large containers others -- small containers. Another important aspect for the consumer is the amount of calories the consumption of a soft drink adds to their daily diet. Finally, the price of a soft drink might also be a factor.  
+In order to solve the specified problem the system examines several areas of interest. The area of interest most aligned with the main goal has to do with the sugar content of a soft drink. More specifically the amount of sugar a drink contains, if any at all. If the drink does not contain sugar it might contain artificial sweeteners in its place, which could be unwanted by the consumer. Hence, the system needs to know the consumer's preference towards artificial sweeteners. Another way to separate the subset into two is by specifying the carbonation of the drink, more specifically, carbonated and non-carbonated. In a similar fashion the system needs to know about the caffeine contents of the drink, if any. Very often the consumer might have preferences towards a given soft drink only because it has been made by a certain manufacturer. Hence the system needs to determine if the consumer has any such preferences or is willing to try products from a variety of manufacturers or brands. Furthermore, the consumer might have preferences towards the packaging of a soft drink. Some customers prefer buying large containers others -- small containers. Another important aspect for the consumer is the amount of calories the consumption of a soft drink adds to their daily diet. Finally, the price of a soft drink might also be a factor.  
 
 \subsection{Domain model}
 
@@ -76,7 +116,7 @@ The system consists of two main types of questions. One type are multiple choice
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\textwidth]{img/question_options.png}
-	\caption{Example of multiple options question}
+	\caption{Example of multiple choice question}
 	\label{fig:question-options}
 \end{figure}
 
@@ -107,19 +147,19 @@ Most facts have a finite domain with a small number of possible values. This mea
 
 The system uses a freely available solver\footnote{The solver is available at \url{https://github.com/jelmervdl/kennissysteem}}. The aforementioned solver has the added functionality that allows for the displaying of the current values of the facts and rules. This functionality is accessible through the ``Debug'' link in the main menu. It is quite helpful for tracking the goal stack, inferred facts and matched rules. An example, can be found in \textit{Figure \ref{fig:debug}}. 
 
-Additionally, if the user makes a mistake and wants to go back to a previous question he/she can navigate the questions going backwards and forwards using the arrow buttons of the browsers. If the users wishes to just start over this can be done through the use of the ``Start over'' tab in the navigation menu.
+Additionally, if the user makes a mistake and wants to go back to a previous question he/she can navigate the questions going backwards and forwards using the arrow buttons of the browser. If the users wishes to just start over this can be done through the use of the ``Start over'' tab in the navigation menu.
 
 \section{Walkthrough of a session}
 
-At the beginning of a session all goals are added to a stack and the last added goal is the first to be examined by the backwards chaning algorithm. The algorithm concludes that it need to know about the fact \verb|sugar_free| which can be obtained by asking the corresponding question. This is why at the start of the session the sugar related question is the first one the uses sees.
+At the beginning of a session all goals are added to a stack and the last added goal is the first to be examined by the backwards chaning algorithm. The algorithm concludes that it needs to know about the fact \verb|sugar_free| which can be obtained by asking the corresponding question. This is why at the start of the session the sugar related question is the first one the user sees.
 
-In this particular walkthrough the user selects the ``Yes'' option. The forward chaining algorithm infers that the rules regarding the \verb|has_sweeteners| fact and the \verb|package-size| rule for small packages cannot be applied. This is due to the fact that the presence of sugar makes the use of artificial sweeteners redundant. Also the presence of sugar acts as a preservative meaning that it cannot be inferred that the user will prefer small packages.
+In this particular walkthrough the user selects the ``Yes'' option. The forward chaining algorithm infers that the rules regarding the \verb|has_sweeteners| fact and the \verb|package_size| rule for small packages cannot be applied. This is due to the fact that the presence of sugar makes the use of artificial sweeteners redundant. Also the presence of sugar acts as a preservative meaning that it cannot be inferred that the user will prefer small packages.
 
-The next goal from the goal stack to be examined by the backwards chaining algorithm is \verb|package_size|. The algorithm determines there is only one remaining rule which can infer \verb|pakcage_size| but it requires either the \verb|deversity| fact or the \verb|weekly_usage| fact. These facts can be obtained by asking the user the corresponding question. Due to the order the next question asked is about the \verb|diversity| fact. In this case the user chooses the first option ``I consume a wide variety of drinks''. This sets the fact \verb|diversity| to ``no'' which means the rules is still inconclusive due to the OR gate. This is why the next question has to do with the \verb|weekly_usage| fact. The user selects the second option ``Between 2.5L and 7L per week''. This fails the rule, meaning the system cannot infer the \verb|package_size| fact. The fact can be obtained by asking the user by asking the corresponding question. Here the user selects the first option ``I prefer single use, smaller containers.''.
+The next goal from the goal stack to be examined by the backwards chaining algorithm is \verb|package_size|. The algorithm determines there is only one remaining rule which can infer \verb|pakcage_size| but it requires either the \verb|deversity| fact or the \verb|weekly_usage| fact. These facts can be obtained by asking the user the corresponding question. Due to the order the next question asked is about the \verb|diversity| fact. In this case the user chooses the first option ``I consume a wide variety of drinks''. This sets the fact \verb|diversity| to ``no'' which means the rules is still inconclusive due to the OR gate contained within the rule. This is why the next question has to do with the \verb|weekly_usage| fact. The user selects the second option ``Between 2.5L and 7L per week''. This fails the rule, meaning the system cannot infer the \verb|package_size| fact. The fact can be obtained by asking the user the corresponding question. Here the user selects the first option ``I prefer single use, smaller containers.''.
 
 The next goal from the goal stack to be examined by the backwards chaining algorithm is \verb|energy_drink|. Since there is no rule where \verb|energy_drink| is on the right-hand side, the system asks the corresponding question. Here the user select the first option ``Yes, the recommended beverages can be energy drinks''. The forward chaining algorithm infers the \verb|has_caffeine| fact using the corresponding rule.
 
-The next goal in the goal stack is \verb|has_caffeine|, however, it has already been inferred. The system moves on to the next goal \verb|is_carbonated|. The user selects the first option ``Yes, the recommended beverages should be carbonated''. This directly set the goal \verb|is_carbonated|
+The next goal in the goal stack is \verb|has_caffeine|, however, it has already been inferred. The system moves on to the next goal \verb|is_carbonated|. The user selects the first option ``Yes, the recommended beverages should be carbonated''. This directly sets the goal \verb|is_carbonated|
 
 The next goal in the goal stack is \verb|has_brand_loyalty| so the user is asked the corresponding question. Here the user select the second option ``No''. This fails the two rules for the \verb|manufacturer| fact. And the \verb|manufacturer| fact becomes \textit{undefined} in the forward chain.
 
@@ -148,5 +188,12 @@ Both team members considered the topic of healthy consumer behavior a relatively
 Creating a website application was not difficult for the team due to prior experience. However, working with the solver brought some new insights into the inner workings of forward/backward chaining algorithm.
 
 The most difficult aspect of the project was collecting a structured and well defined data about the products used (beverages). There are quite a few products databases, however, we still needed some manual extension of the data in all cases. This manual input of data proved to be quite difficult and time consuming. 
+
+\clearpage
+\appendix
+
+\section{Knowledge base}
+\label{app:kb}
+\lstinputlisting[caption={sugar.xml},label={code:kb},language=XML,style=mystyle]{../app/kb/sugar.xml}
 
 \end{document}
